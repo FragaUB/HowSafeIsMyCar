@@ -36,48 +36,58 @@
                 <option value="">Seleccione una versión</option>
             </select>
         </div>
+        <hr>
         <!--resultados de la api-->
         <div id="Resultados" class="info_autos">
             <article>
                 <!--imagenes-->
-                <img src="" alt="iamgen_1" class="choque_frontal"><img src="" alt="imagen_2" class="choque_lateral"><img src="" alt="imagen_3" class="choque_poste">
+                <img id="img_frontal" src="" alt="iamgen_1" class="choque_frontal">
+                <hr>
+                <img id="img_lateral" src="" alt="imagen_2" class="choque_lateral">
+                <hr>
+                <img id="img_poste" src="" alt="imagen_3" class="choque_poste">
+                <hr>
                 <!--rating imagen 1-->
                 <div class="estrellas_frente">
-                    <span class="frente">frente</span>
+                    <span id="raiting-frente" class="frente">frente</span>
                     <div id="rating_frente" class="frente_contenedor"></div>
-
-                    <span class="conductor">conductor</span>
+                    <hr>
+                    <span id="raiting-conductor" class="conductor">conductor</span>
                     <div id="rating_conductor" class="conductor_contenedor"></div>
-
-                    <span class="pasajero">pasajero</span>
+                    <hr>
+                    <span id="raiting-pasajero" class="pasajero">pasajero</span>
                     <div id="rating_pasajero" class="pasajero_contenedor"></div>
                 </div>
+                <hr>
                 <!--rating imagen 2-->
                 <div class="estrellas_lateral">
-                    <span class="lateral">lateral</span>
+                    <span id="raiting-lateral" class="lateral">lateral</span>
                     <div id="rating_lateral" class="lateral_contenedor"></div>
-
-                    <span class="conductor_lateral">conductor</span>
+                    <hr>
+                    <span id="raiting-conductor-lateral" class="conductor_lateral">conductor</span>
                     <div id="rating_conductor_lateral" class="conductor_lateral_contenedor"></div>
-
-                    <span class="pasajero_lateral">pasajero</span>
-                    <div id="rating_pasajero_laterak" class="pasajero_lateral_contenedor"></div>
+                    <hr>
+                    <span id="raiting-pasajero-lateral" class="pasajero_lateral">pasajero</span>
+                    <div id="rating_pasajero_lateral" class="pasajero_lateral_contenedor"></div>
                 </div>
+                <hr>
                 <!--rating imagen 3-->
                 <div class="estrellas_poste">
-                    <span class="poste">c/poste</span>
+                    <span id="raiting-poste" class="poste">c/poste</span>
                     <div id="rating_poste" class="poste_contenedor"></div>
-
-                    <span class="vuelco">riesgo de vuelco</span>
+                    <hr>
+                    <span id="raiting-vuelco" class="vuelco">riesgo de vuelco</span>
                     <div id="rating_vuelco" class="vuelco_contenedor"></div>
-
-                    <span class="probabilidad">probabilidad</span>
+                    <hr>
+                    <span id="raiting-probabilidad" class="probabilidad">probabilidad</span>
                     <div id="rating_probabilidad" class="probabilidad_contenedor"></div>
                 </div>
+                <hr>
             </article>
         </div>
 
     </main>
+    <hr>
     <span>Resultados JSON de la petición completa</span>
     <span id="resultados"></span>
     <script src="/src/api/script.js"></script>
