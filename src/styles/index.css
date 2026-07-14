@@ -1,3 +1,5 @@
+@import url();
+
 /*Barra cabecera de: logo, título, descripción*/
 .texto-barra {
     display: flex;
@@ -102,7 +104,8 @@ div p {
 }
 
 /*Resultados: Imágenes*/
-#Resultados {font-family: "Montserrat"; 
+#Resultados {
+    font-family: "Montserrat"; 
     background-color: rgb(34, 39, 43);
     border-radius: 15px;
     width: max-content;
