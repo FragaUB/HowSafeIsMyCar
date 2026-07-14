@@ -4,92 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/src/styles/index.css">
-    <title>HowSafeIsMyCar</title>
+    <link rel="stylesheet" href="/src/styles/fonts.css">
+    <title>HowSafeIsMyCar?</title>
 </head>
 <body>
     <!--encabezado-->
     <header class="barra">
-        <img src="img/logo.jpg" alt="logo" width="75" height="61" class="logo">
-        <div clas="texto-barra">
-            <h1 class="titulo_principal">
-                <span class="mitad_uno">is My</span><span class="mitad_dos"> Car Safe</span><span class="fin_titulo">?</span>
-            </h1>
-            <h2 class="descripccion_barra">
-                calificaciones basadas en las<br>pruebas de seguridad de la
-            </h2>
-            <h1 class="NHTSA">NHTSA</h1>
+        <div class="texto-barra">
+            <div><img class="logo encabezado--item" src="img/logo.jpg" alt="HowSafeIsMyCar?"></div>
+            <div><h2 class="titulo_principal encabezado--item">
+                <span class="mitad_uno">Is My</span><span class="mitad_dos">Car Safe</span><span class="mitad_tres">?</span>
+            </h2></div>
+            <div><h2 class="descripcion_barra encabezado--item">
+                Calificaciones basadas en las<br>pruebas de seguridad de la:
+            </h2></div>
+            <div><h2 class="NHTSA encabezado--item">NHTSA</h2></div>
         </div>
     </header>
     <main> 
-        <!--listas-->
-        <div class="listas">
-            <select class="año" name="year" id="year">
-                <option value="">Seleccione un año</option>
-            </select>
-            <select class="marca_auto" name="maker" id="marca_auto">
-                <option value="">Seleccione una marca</option>
-            </select>
-            <select class="modelo_auto" name="model" id="modelo_auto">
-                <option value="">Seleccione un modelo</option>
-            </select>
-            <select class="version_auto" name="version" id="version_auto">
-                <option value="">Seleccione una versión</option>
-            </select>
-        </div>
-        <hr>
-        <!--resultados de la api-->
-        <div id="Resultados" class="info_autos">
-            <article>
-                <!--imagenes-->
-                <img id="img_frontal" src="" alt="iamgen_1" class="choque_frontal">
-                <hr>
-                <img id="img_lateral" src="" alt="imagen_2" class="choque_lateral">
-                <hr>
-                <img id="img_poste" src="" alt="imagen_3" class="choque_poste">
-                <hr>
-                <!--rating imagen 1-->
-                <div class="estrellas_frente">
-                    <span id="raiting-frente" class="frente">frente</span>
-                    <div id="rating_frente" class="frente_contenedor"></div>
-                    <hr>
-                    <span id="raiting-conductor" class="conductor">conductor</span>
-                    <div id="rating_conductor" class="conductor_contenedor"></div>
-                    <hr>
-                    <span id="raiting-pasajero" class="pasajero">pasajero</span>
-                    <div id="rating_pasajero" class="pasajero_contenedor"></div>
+        <div id="contenedor">
+            <div id="titulo_y_listas">
+                <h1>Probá el <span id="choque">choque</span> antes de comprarlo.</h1>
+                <p id="descripcion_titulo">Podrás ver los siguientes parámetros de seguridad en choques: frontal, lateral y vuelco.</p>
+                
+            <!--listas-->
+                <div class="listas">
+                    <select class="selecciones año--item" name="year" id="year">
+                        <option value="">Seleccione año</option>
+                    </select>   
+                    <select class="selecciones marca_auto--item" name="maker" id="marca_auto">
+                        <option value="">Seleccione marca</option>
+                    </select>
+                    <select class="selecciones modelo_auto--item" name="model" id="modelo_auto">
+                        <option value="">Seleccione modelo</option>
+                    </select>
+                    <select class="selecciones version_auto--item" name="version" id="version_auto">
+                        <option value="">Seleccione versión</option>
+                    </select>
                 </div>
-                <hr>
-                <!--rating imagen 2-->
-                <div class="estrellas_lateral">
-                    <span id="raiting-lateral" class="lateral">lateral</span>
-                    <div id="rating_lateral" class="lateral_contenedor"></div>
-                    <hr>
-                    <span id="raiting-conductor-lateral" class="conductor_lateral">conductor</span>
-                    <div id="rating_conductor_lateral" class="conductor_lateral_contenedor"></div>
-                    <hr>
-                    <span id="raiting-pasajero-lateral" class="pasajero_lateral">pasajero</span>
-                    <div id="rating_pasajero_lateral" class="pasajero_lateral_contenedor"></div>
-                </div>
-                <hr>
-                <!--rating imagen 3-->
-                <div class="estrellas_poste">
-                    <span id="raiting-poste" class="poste">c/poste</span>
-                    <div id="rating_poste" class="poste_contenedor"></div>
-                    <hr>
-                    <span id="raiting-vuelco" class="vuelco">riesgo de vuelco</span>
-                    <div id="rating_vuelco" class="vuelco_contenedor"></div>
-                    <hr>
-                    <span id="raiting-probabilidad" class="probabilidad">probabilidad</span>
-                    <div id="rating_probabilidad" class="probabilidad_contenedor"></div>
-                </div>
-                <hr>
-            </article>
-        </div>
+            </div>
+            <!--resultados de la api-->
+            <div id="Resultados" class="info_autos">
+                <article class="contenedor_tarjetas">
+                    <!--imagenes-->
+                    <div class="tarjeta">
+                        <img id="img_frontal" src="" alt="imagen_1" class="imagen">
+                        <!--rating imagen 1-->
+                        <div class="estrellas_frente">
+                            <span id="raiting-frente" class="frente">frente</span>
+                            <div id="rating_frente" class="frente_contenedor"></div>
+                            <span id="raiting-conductor" class="conductor">conductor</span>
+                            <div id="rating_conductor" class="conductor_contenedor"></div>
+                            <span id="raiting-pasajero" class="pasajero">pasajero</span>
+                            <div id="rating_pasajero" class="pasajero_contenedor"></div>
+                        </div>
+                    </div>
 
-    </main>
+                    <div class="tarjeta">
+                        <img id="img_lateral" src="" alt="imagen_2" class="imagen">
+                        <!--rating imagen 2-->
+                        <div class="estrellas_lateral">
+                            <span id="raiting-lateral" class="lateral">lateral</span>
+                            <div id="rating_lateral" class="lateral_contenedor"></div>
+                            <span id="raiting-conductor-lateral" class="conductor_lateral">conductor</span>
+                            <div id="rating_conductor_lateral" class="conductor_lateral_contenedor"></div>
+                            <span id="raiting-pasajero-lateral" class="pasajero_lateral">pasajero</span>
+                            <div id="rating_pasajero_lateral" class="pasajero_lateral_contenedor"></div>
+                        </div>
+                    </div>
+
+                    <div class="tarjeta">
+                        <img id="img_poste" src="" alt="imagen_3" class="imagen">
+                        <!--rating imagen 3-->
+                        <div class="estrellas_poste">
+                            <span id="raiting-poste" class="poste">c/poste</span>
+                            <div id="rating_poste" class="poste_contenedor"></div>
+                            <span id="raiting-vuelco" class="vuelco">riesgo de vuelco</span>
+                            <div id="rating_vuelco" class="vuelco_contenedor"></div>
+                            <span id="raiting-probabilidad" class="probabilidad">probabilidad</span>
+                            <div id="rating_probabilidad" class="probabilidad_contenedor"></div>
+                        </div>
+                    </div>
+                    </div>
+                </article>
+                <footer>
+                    <hr>
+                    
+                </footer>
+            </div>
+        </div>
+        </main>
     <hr>
     <span>Resultados JSON de la petición completa</span>
     <span id="resultados"></span>
-    <script src="/src/api/script.js"></script>
+    <script src="api/script.js"></script>
 </body>
 </html>

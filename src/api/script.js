@@ -93,7 +93,7 @@ function GetYears() {
 }
 
 // En vez de cargar con bucles for los resultados devueltos por cada "consulta/peticion" a la API, vamos a usar eventos JavaScript. 
-// Un evento JavaScript es similar a un trigger (disparador) que se activa siempre y cuando ocurra (valla la redundacia) un evento en particular. En este caso, el evento es el "CHANGE". Osea, cuando se MODIFIQUE el valor de un select, va a ejecutarse lo que se encuentre dentro de la funcion. 
+// Un evento JavaScript es similar a un trigger (disparador) que se activa siempre y cuando ocurra (valga la redundacia) un evento en particular. En este caso, el evento es el "CHANGE". Osea, cuando se MODIFIQUE el valor de un select, va a ejecutarse lo que se encuentre dentro de la funcion. 
 // Nota de Fran: La idea es explicar el flujo de la api para que vean como funciona.
 
 // 3. Cuando SE SELECCIONE UN AÑO en particular desde el select. Va a ocurrir lo siguiente: 
@@ -102,9 +102,9 @@ YEAR_SELECT.addEventListener("change", async () => {
     let year = YEAR_SELECT.value;
 
     // Aca entra un poco de razonamiento logico, al modificar el select de año, vamos a "limpiar" los select de marca, modelo y version, ya que al cambiar el año, las marcas, modelos y versiones disponibles pueden variar.
-    ResetSelect(MAKER_SELECT, "Seleccione una marca");
-    ResetSelect(MODEL_SELECT, "Seleccione un modelo");
-    ResetSelect(VERSION_SELECT, "Seleccione una versión");
+    ResetSelect(MAKER_SELECT, "Seleccione marca");
+    ResetSelect(MODEL_SELECT, "Seleccione modelo");
+    ResetSelect(VERSION_SELECT, "Seleccione versión");
     // En general al modificar algun select, limpiamos la repuestas (ya no tiene sentido mostrar algo que no pretende el usuario)
     RESULTADOS_SPAN.textContent = "";
 
@@ -129,8 +129,8 @@ MAKER_SELECT.addEventListener("change", async () => {
     let maker = MAKER_SELECT.value;
 
     // Volvemos a reestablecer los select de modelo y version.
-    ResetSelect(MODEL_SELECT, "Seleccione un modelo");
-    ResetSelect(VERSION_SELECT, "Seleccione una versión");
+    ResetSelect(MODEL_SELECT, "Seleccione modelo");
+    ResetSelect(VERSION_SELECT, "Seleccione versión");
     RESULTADOS_SPAN.textContent = "";
 
     if (!maker) return;
@@ -153,14 +153,14 @@ MODEL_SELECT.addEventListener("change", async () => {
     let model = MODEL_SELECT.value;
 
     // Solo reseteamos la vesion
-    ResetSelect(VERSION_SELECT, "Seleccione una versión");
+    ResetSelect(VERSION_SELECT, "Seleccione versión");
     RESULTADOS_SPAN.textContent = "";
 
     if (!model) return;
 
     // Chequeen esto:
     try {
-        // Obtnemos las versiones del auto segun el año, marca y modelo.
+        // Obtenemos las versiones del auto según el año, marca y modelo.
         let versions = await GetVersions(year, maker, model);
  
         // PREVIO a cargar en select, vamos a filtrar.
