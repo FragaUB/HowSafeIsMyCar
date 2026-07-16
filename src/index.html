@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/index.css">
-    <link rel="stylesheet" href="/styles/fonts.css">
+
+    <link rel="stylesheet" href="/src/styles/index.css">
+    <link rel="stylesheet" href="/src/styles/fonts.css">
+    <!--<link rel="stylesheet" href="/styles/index.css">
+    <link rel="stylesheet" href="/styles/fonts.css">-->
     <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
     <title>HowSafeIsMyCar?</title>
 </head>
@@ -50,40 +53,43 @@
                     <!--imagenes-->
                     <div class="tarjeta">
                         <img id="img_frontal" src="" alt="imagen_1" class="imagen">
+                        <hr>
                         <!--rating imagen 1-->
                         <div class="estrellas_frente">
-                            <span id="raiting-frente" class="frente">frente</span>
-                            <div id="rating_frente" class="frente_contenedor"></div>
-                            <span id="raiting-conductor" class="conductor">conductor</span>
-                            <div id="rating_conductor" class="conductor_contenedor"></div>
-                            <span id="raiting-pasajero" class="pasajero">pasajero</span>
-                            <div id="rating_pasajero" class="pasajero_contenedor"></div>
+                            <span id="raiting-frente" class="frente">Impacto Frontal:</span>
+                            <h3 id="h3-var"><div id="rating_frente" class="frente_contenedor"></div></h3>
+                            <span id="raiting-conductor" class="conductor"> Impacto Frontal Conductor:</span>
+                            <h3 id="h3-var"><div id="rating_conductor" class="conductor_contenedor"></div></h3>
+                            <span id="raiting-pasajero" class="pasajero">Impacto Frontal Pasajero</span>
+                            <h3 id="h3-var"><div id="rating_pasajero" class="pasajero_contenedor"></div></h3>
                         </div>
                     </div>
 
                     <div class="tarjeta">
                         <img id="img_lateral" src="" alt="imagen_2" class="imagen">
                         <!--rating imagen 2-->
+                        <hr>
                         <div class="estrellas_lateral">
-                            <span id="raiting-lateral" class="lateral">lateral</span>
-                            <div id="rating_lateral" class="lateral_contenedor"></div>
-                            <span id="raiting-conductor-lateral" class="conductor_lateral">conductor</span>
-                            <div id="rating_conductor_lateral" class="conductor_lateral_contenedor"></div>
-                            <span id="raiting-pasajero-lateral" class="pasajero_lateral">pasajero</span>
-                            <div id="rating_pasajero_lateral" class="pasajero_lateral_contenedor"></div>
+                            <span id="raiting-lateral" class="lateral">Impacto Lateral</span>
+                            <h3 id="h3-var"><div id="rating_lateral" class="lateral_contenedor"></div></h3>
+                            <span id="raiting-conductor-lateral" class="conductor_lateral">Impacto Lateral conductor</span>
+                            <h3 id="h3-var"><div id="rating_conductor_lateral" class="conductor_lateral_contenedor"></div></h3>
+                            <span id="raiting-pasajero-lateral" class="pasajero_lateral">Impacto Lateral Pasajero</span>
+                            <h3 id="h3-var"><div id="rating_pasajero_lateral" class="pasajero_lateral_contenedor"></div></h3>
                         </div>
                     </div>
 
                     <div class="tarjeta">
                         <img id="img_poste" src="" alt="imagen_3" class="imagen">
+                        <hr>
                         <!--rating imagen 3-->
                         <div class="estrellas_poste">
-                            <span id="raiting-poste" class="poste">c/poste</span>
-                            <div id="rating_poste" class="poste_contenedor"></div>
-                            <span id="raiting-vuelco" class="vuelco">riesgo de vuelco</span>
-                            <div id="rating_vuelco" class="vuelco_contenedor"></div>
-                            <span id="raiting-probabilidad" class="probabilidad">probabilidad</span>
-                            <div id="rating_probabilidad" class="probabilidad_contenedor"></div>
+                            <span id="raiting-poste" class="poste">Impacto contra poste vertical:</span>
+                            <h3 id="h3-var"><div id="rating_poste" class="poste_contenedor"></div></h3>
+                            <span id="raiting-vuelco" class="vuelco">Valoracion Riesgo de vuelco:</span>
+                            <h3 id="h3-var"><div id="rating_vuelco" class="vuelco_contenedor"></div></h3>
+                            <span id="raiting-probabilidad" class="probabilidad">Porcentaje: </span>
+                            <h3 id="h3-var"><div id="rating_probabilidad" class="probabilidad_contenedor"></div></h3>
                         </div>
                     </div>
                     </div>

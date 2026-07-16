@@ -160,42 +160,20 @@ MODEL_SELECT.addEventListener("change", async () => {
 
     // Chequeen esto:
     try {
-        // Obtenemos las versiones del auto según el año, marca y modelo.
+        //Primero obtenemos todas las versiones del modelo solicitado
         let versions = await GetVersions(year, maker, model);
- 
-        // PREVIO a cargar en select, vamos a filtrar.
-        // Lo que hacemos es buscar la informacion de cada vesion, si llegase a ver alguna version SIN CALIFICACION FINAL, lo vamos a descartar.
-        let versionesConInfo = await Promise.all(
-            versions.map(async version => {
-                try {
-                    let info = await GetVehicleInfo(version.VehicleId);
-                    let overallRating = info && info[0] ? info[0].OverallRating : undefined;
-                    return { ...version, OverallRating: overallRating };
-                } catch (err) {
-                    console.error(`Error al obtener info del vehiculo ${version.VehicleId}:`, err);
-                    return { ...version, OverallRating: undefined };
-                }
-            })
-        );
- 
-        let versionesFiltradas = versionesConInfo.filter(version =>
-            version.OverallRating !== "Not Rated" &&
-            version.OverallRating !== "" &&
-            version.OverallRating !== null &&
-            version.OverallRating !== undefined &&
-            version.OverallRating !== 0
-        );
-  
+        // Ahora: vamos a filtrar el elemento json.
+        let versionesFiltradas = await FilterVersion(versions); // Aca nos va a devolver un array que contrndra a las versiones filtradas.
         VERSION_SELECT.dataset.versions = JSON.stringify(versionesFiltradas);
- 
-        // Similar a un bucle for, las versiones filtradas, la vamos a cargar en el select
-        // Es la version sin FillSelect.
-        versionesFiltradas.forEach(version => {
+
+        for (let i = 0; i < versionesFiltradas.length; i++) //.length sera la cantidad maxima de versiones a recorrer.
+        {
             let option = document.createElement("option");
-            option.value = version.VehicleId;
-            option.text = version.VehicleDescription;
+            option.value = versionesFiltradas[i].VehicleId;
+            option.text = versionesFiltradas[i].VehicleDescription;
             VERSION_SELECT.appendChild(option);
-    });
+        }
+
     } catch (error) {
         console.error("Error al obtener las versiones:", error);
     }
@@ -217,6 +195,57 @@ VERSION_SELECT.addEventListener("change", async () => {
         console.error("Error al obtener la info del vehículo:", error);
     }
 });
+
+async function FilterVersion(versions)
+{
+    //La idea principal es que de todas las versiones, solicitar su informacion y ver que si la valoracion general es null descartarlo y no mostrarlo
+    // La informacion filtrada se cargara en un array. 
+    let versionesFiltradas = [];
+
+    // por cada version que se obtenga.
+    for (let i = 0; i < versions.length; i++)
+    {
+        // Aca, asignamos a la variable version un cuerpo JSON que va a filtrar, si llega a ver mas por cada iteraccion sobreescribira la informacion anterior por la version restante. 
+        let version = versions[i];
+        try
+        {
+            // Del array, hacemos referencia al id y obtenemos la informacion del vehiculo
+            let info = await GetVehicleInfo(version.VehicleId);
+            let overallRating;
+
+            if (info && info[0])
+            {
+                // al resultado, iteramos y seleccionamos el valor de OverallRating y la guardamos momentaneamente en una variable.
+                overallRating = info[0].OverallRating;
+            }
+            else
+            {
+                overallRating = undefined;
+            }
+
+            // filtramos por varias filtros.
+            if (
+                overallRating != "Not Rated" &&
+                overallRating != "" &&
+                overallRating != null &&
+                overallRating != undefined &&
+                overallRating != 0
+            )
+            {
+                // si pasa el filtro, se le asigna a la estructura de la version su valoracion general.
+                version.OverallRating = overallRating;
+                // push hace agraegar la version filtrada al array.
+                versionesFiltradas.push(version);
+            }
+        }
+        catch(error)
+        {
+            console.error(error);
+        }
+    }
+
+    return versionesFiltradas;
+}
 
 function FormatRating(value) {
     if (value === undefined || value === null || value === "" || value === "Not Rated") {
