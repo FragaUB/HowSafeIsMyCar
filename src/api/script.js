@@ -24,6 +24,8 @@ const RATING_POSTE = document.getElementById("rating_poste");
 const RATING_VUELCO = document.getElementById("rating_vuelco");
 const RATING_PROBABILIDAD = document.getElementById("rating_probabilidad");
 
+const INFORMACION_AUTO_SELECCIONADO = document.getElementById("texto_auto_seleccionado");
+
 // marcas disponibles para un año dado
 async function GetMakers(year) {
     let response = await fetch(`${URL_BASE}/modelyear/${year}?format=json`);
@@ -280,6 +282,9 @@ function Viewinfocar(vehicleInfo) {
     RATING_PROBABILIDAD.textContent = info.RolloverPossibility != null
         ? `${(info.RolloverPossibility * 100).toFixed(1)}% de probabilidad de vuelco`
         : "Sin datos";
+
+    // Informacion del auto seleccionado:
+    INFORMACION_AUTO_SELECCIONADO.textContent = info.VehicleDescription;
 }
 
 // 0. Al inicializar el codigo JavaScript, siempre va a comenzar con la funcion main.
