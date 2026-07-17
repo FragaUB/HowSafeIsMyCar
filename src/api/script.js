@@ -26,6 +26,29 @@ const RATING_PROBABILIDAD = document.getElementById("rating_probabilidad");
 
 const INFORMACION_AUTO_SELECCIONADO = document.getElementById("texto_auto_seleccionado");
 
+// Contenedor completo de la tarjeta de resultados (imágenes + ratings).
+// Se mantiene oculto hasta que haya datos válidos para mostrar.
+const RESULTADOS_CONTENEDOR = document.getElementById("Resultados");
+
+// Bloque "Resultados de seguridad para: ..." — igual que la tarjeta,
+// se mantiene oculto hasta que haya un vehículo seleccionado con datos.
+const INFO_AUTO_CONTENEDOR = document.querySelector(".info_auto");
+
+// Oculta la tarjeta de resultados. Se llama cada vez que el usuario
+// cambia cualquier select, para no dejar datos "viejos" visibles
+// mientras se resuelve la nueva búsqueda.
+function OcultarResultados() {
+    RESULTADOS_CONTENEDOR.classList.remove("visible");
+    INFO_AUTO_CONTENEDOR.classList.remove("visible");
+}
+
+// Muestra la tarjeta de resultados. Solo se llama después de confirmar
+// que la info del vehículo tiene datos reales (ver Viewinfocar).
+function MostrarResultados() {
+    RESULTADOS_CONTENEDOR.classList.add("visible");
+    INFO_AUTO_CONTENEDOR.classList.add("visible");
+}
+
 // marcas disponibles para un año dado
 async function GetMakers(year) {
     let response = await fetch(`${URL_BASE}/modelyear/${year}?format=json`);
@@ -109,6 +132,9 @@ YEAR_SELECT.addEventListener("change", async () => {
     ResetSelect(VERSION_SELECT, "Seleccione versión");
     // En general al modificar algun select, limpiamos la repuestas (ya no tiene sentido mostrar algo que no pretende el usuario)
     RESULTADOS_SPAN.textContent = "";
+    // Ocultamos la tarjeta: al cambiar de año, ya no corresponde
+    // seguir mostrando los datos del vehículo anterior.
+    OcultarResultados();
 
     // Si el usuario no selecciona un año, no hacemos nada.
     if (!year) return; 
@@ -134,6 +160,7 @@ MAKER_SELECT.addEventListener("change", async () => {
     ResetSelect(MODEL_SELECT, "Seleccione modelo");
     ResetSelect(VERSION_SELECT, "Seleccione versión");
     RESULTADOS_SPAN.textContent = "";
+    OcultarResultados();
 
     if (!maker) return;
 
@@ -157,6 +184,7 @@ MODEL_SELECT.addEventListener("change", async () => {
     // Solo reseteamos la vesion
     ResetSelect(VERSION_SELECT, "Seleccione versión");
     RESULTADOS_SPAN.textContent = "";
+    OcultarResultados();
 
     if (!model) return;
 
@@ -185,6 +213,7 @@ VERSION_SELECT.addEventListener("change", async () => {
     let vehicleId = VERSION_SELECT.value;
 
     RESULTADOS_SPAN.textContent = "";
+    OcultarResultados();
 
     if (!vehicleId) return;
 
@@ -256,35 +285,123 @@ function FormatRating(value) {
     return `${value} ★`;
 }
 
+// RENDERIZADO VISUAL: ESTRELLAS Y BARRA DE PORCENTAJE
+
+// DrawStars: pinta 5 cuadraditos/estrellas dentro de "container".
+// Los primeros "rating" (redondeado hacia abajo) quedan con la clase
+// "activa" (color amarillo vía CSS), el resto queda gris.
+// Si el rating no es un número válido (0, "Not Rated", null, etc.),
+// se dibujan las 5 estrellas apagadas.
+function DrawStars(container, rating) {
+    // Limpiamos el contenedor por si ya tenía algo dibujado antes
+    // (por ejemplo, al cambiar de vehículo).
+    container.innerHTML = "";
+    container.classList.add("rating-linea");
+
+    let valor = Number(rating);
+    if (isNaN(valor)) valor = 0;
+
+    // Creamos 5 segmentos fijos (líneas/barritas en vez de estrellas).
+    for (let i = 1; i <= 5; i++) {
+        let segmento = document.createElement("span");
+        segmento.classList.add("segmento");
+        // Si el índice actual es menor o igual al rating, ese segmento
+        // se pinta como "activo" (amarillo).
+        if (i <= valor) {
+            segmento.classList.add("activa");
+        }
+        container.appendChild(segmento);
+    }
+}
+
+// DrawPercentBar: pinta una barra horizontal cuyo relleno llega hasta
+// "porcentaje" (0 a 100). El color del relleno cambia según el rango:
+// bajo (verde), medio (amarillo) o alto (rojo), ya que en este caso
+// el porcentaje representa riesgo de vuelco (a mayor %, peor).
+function DrawPercentBar(container, porcentaje) {
+    container.innerHTML = "";
+
+    let valor = Number(porcentaje);
+    if (isNaN(valor)) valor = 0;
+    // Limitamos el valor entre 0 y 100 por las dudas.
+    valor = Math.max(0, Math.min(100, valor));
+
+    // Envolvemos la barra y el número juntos para poder alinearlos
+    // horizontalmente con flexbox (ver clase .barra-porcentaje-wrapper).
+    let wrapper = document.createElement("div");
+    wrapper.classList.add("barra-porcentaje-wrapper");
+
+    let barraFondo = document.createElement("div");
+    barraFondo.classList.add("barra-fondo");
+
+    let barraRelleno = document.createElement("div");
+    barraRelleno.classList.add("barra-relleno");
+    barraRelleno.style.width = `${valor}%`;
+
+    if (valor <= 33) {
+        barraRelleno.classList.add("bajo");
+    } else if (valor <= 66) {
+        barraRelleno.classList.add("medio");
+    } else {
+        barraRelleno.classList.add("alto");
+    }
+
+    barraFondo.appendChild(barraRelleno);
+
+    // Número al lado de la barra, con un decimal (ej: "24.2%").
+    let numero = document.createElement("span");
+    numero.classList.add("barra-porcentaje-numero");
+    numero.textContent = `${valor.toFixed(1)}%`;
+
+    wrapper.appendChild(barraFondo);
+    wrapper.appendChild(numero);
+    container.appendChild(wrapper);
+}
+
 //6. En esta funcion que tiene como parametro de entrada la informacion.
 function Viewinfocar(vehicleInfo) {
     // Aca vamos a camprobar algo: Si existe la informacion del vehiculo (osea que no sea nulo)
     let info = vehicleInfo && vehicleInfo[0] ? vehicleInfo[0] : {};
+
+    // Si "info" quedó vacío (objeto {}), significa que la API no
+    // devolvió datos para este vehículo. En ese caso no mostramos la
+    // tarjeta y cortamos acá: no tiene sentido pintar estrellas ni
+    // barras con datos inexistentes.
+    if (Object.keys(info).length === 0) {
+        OcultarResultados();
+        return;
+    }
  
     //  Imágenes
     IMG_FRONTAL.src = info.FrontCrashPicture || IMG_PLACEHOLDER;
     IMG_LATERAL.src = info.SideCrashPicture || IMG_PLACEHOLDER;
     IMG_POSTE.src = info.SidePolePicture || IMG_PLACEHOLDER;
  
-    //  Choque frontal 
-    RATING_FRENTE.textContent = FormatRating(info.OverallFrontCrashRating);
-    RATING_CONDUCTOR.textContent = FormatRating(info.FrontCrashDriversideRating);
-    RATING_PASAJERO.textContent = FormatRating(info.FrontCrashPassengersideRating);
+    //  Choque frontal (ahora se dibuja como estrellas en vez de texto)
+    DrawStars(RATING_FRENTE, info.OverallFrontCrashRating);
+    DrawStars(RATING_CONDUCTOR, info.FrontCrashDriversideRating);
+    DrawStars(RATING_PASAJERO, info.FrontCrashPassengersideRating);
  
     //  Choque lateral 
-    RATING_LATERAL.textContent = FormatRating(info.OverallSideCrashRating);
-    RATING_CONDUCTOR_LATERAL.textContent = FormatRating(info.SideCrashDriversideRating);
-    RATING_PASAJERO_LATERAL.textContent = FormatRating(info.SideCrashPassengersideRating);
+    DrawStars(RATING_LATERAL, info.OverallSideCrashRating);
+    DrawStars(RATING_CONDUCTOR_LATERAL, info.SideCrashDriversideRating);
+    DrawStars(RATING_PASAJERO_LATERAL, info.SideCrashPassengersideRating);
  
     //  Choque contra poste y vuelco 
-    RATING_POSTE.textContent = FormatRating(info.SidePoleCrashRating);
-    RATING_VUELCO.textContent = FormatRating(info.RolloverRating);
-    RATING_PROBABILIDAD.textContent = info.RolloverPossibility != null
-        ? `${(info.RolloverPossibility * 100).toFixed(1)}% de probabilidad de vuelco`
-        : "Sin datos";
+    DrawStars(RATING_POSTE, info.SidePoleCrashRating);
+    DrawStars(RATING_VUELCO, info.RolloverRating);
+
+    //  Probabilidad de vuelco: ahora se dibuja como barra de porcentaje.
+    let porcentajeVuelco = info.RolloverPossibility != null
+        ? (info.RolloverPossibility * 100)
+        : 0;
+    DrawPercentBar(RATING_PROBABILIDAD, porcentajeVuelco);
 
     // Informacion del auto seleccionado:
     INFORMACION_AUTO_SELECCIONADO.textContent = info.VehicleDescription;
+
+    // Recién acá, con todos los datos ya pintados, mostramos la tarjeta.
+    MostrarResultados();
 }
 
 // 0. Al inicializar el codigo JavaScript, siempre va a comenzar con la funcion main.
