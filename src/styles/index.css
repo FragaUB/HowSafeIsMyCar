@@ -1,83 +1,112 @@
 /*Barra cabecera de: logo, título, descripción*/
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(28, 28, 28);
+}
+
+main {
+    flex: 1;
+}
+
+.barra {
+    height: 120px;
+    margin: 10px 0 40px 0;
+}
+
 .texto-barra {
     display: flex;
     align-items: center;
-    height: max-content;
-    width: max-content;
-    margin-top: -30px;
+    width: 90%;
 }
+
+.texto-barra div {
+    width: max-content;
+    display: flex;
+    align-items: center;
+}
+
 .encabezado--item {
     font-family: "Antipasto";
     color: #ffffff;
     display: flex;
     align-items: center;
-    position: relative;
+    height: 120px;
     z-index: 30;
 }
-.mitad_dos {color: #fe652f;}
+.mitad_dos {color: #fe652f; padding-left: 10px;}
 .titulo_principal {
     font-weight: 500;
-    font-size: 45px;
+    font-size: 55px;
     background-color: rgb(34, 39, 43);
     border-radius: 0 100px 100px 0;
-    padding: 5px 50px 0px 60px;
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    height: 75px;
-    right: 30px;
+    padding: 0px 50px 0px 80px;
+    position: absolute;
+    left: 110px;
     z-index: 20;
 }
 .descripcion_barra {
     font-weight: 100;
+    font-size: 25px;
     background-color: #fe652f;
-    padding: 0px 215px 0px 60px;
+    padding: 0px 40px 0px 100px;
     border-radius: 0px 100px 100px 0px;
-    box-sizing: border-box;
-    height: 75px;
-    right: 70px;
-    z-index: 10;
+    width: max-content;
+    position: absolute;
+    left: 500px;
+    z-index: 10;   
 }
+
+
 .NHTSA {
     font-family: "Montserrat";
     font-weight: 600;
-    font-size: 50px;
-    right: 280px;
-    bottom: 1px;
+    font-size: 70px;
+    padding: 1px 0px 0px 10px;
 }
+
 .logo {
-    width: 75px;
-    height: 75px;
+    width: 110px;
     background-color: #fe652f;
     padding: 0px 30px 0px 20px;
     border-radius: 0px 100px 100px 0px;
 }
-body {
-    background-color: rgb(28, 28, 28);
-}
+
 #contenedor {
     color: #ffffff;
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
 }
 #titulo_y_listas {
-    width: min-content;
     font-family: "Montserrat";
+    width: max-content;
     margin: 0 auto;
 }
 div h1 {
     color: white;
     font-weight: 900;
-    font-size: 40px;
+    font-size: 50px;
     text-transform: uppercase;
-    width: 550px;
+    width: 700px;
     margin: 0 0 0 0;
 
     #choque {color: #fe652f;}
 }
 div p {
-    margin: 20px 0 0 0;
-}
+        width: 70%;
+        font-size: 15px;
+        text-align: center;
+        margin: 0 auto;
+    }
+    div p span {
+        font-weight: 900;
+    }
 
 /* Selección de listado de opciones*/
 .listas {
@@ -85,14 +114,15 @@ div p {
     background-color: rgb(34, 39, 43);
     border-radius: 15;
     padding: 20px;
-    margin: 5px auto 30px auto;
+    margin: 5px auto 10px auto;
     border-radius: 10px;
 }
 .selecciones {
     width: 160px;
     height: 30px;
     padding: 0px 0px 1px 5px;
-    background-color: rgb(139, 141, 144);
+    background-color: rgb(47, 48, 49);
+    border-color: rgb(86, 86, 86);
     font-family: "Montserrat";
     font-weight: 300;
     color: white;
@@ -100,12 +130,25 @@ div p {
     margin: 2px auto;
 }
 
+select:not(:disabled):hover{border-color: rgb(190, 190, 190);}
+select:focus-visible{
+    outline: 1px solid #fe652f;
+    outline-offset: 2px;
+}
+.leyenda-auto {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;    
+}
+
 /*Resultados: Imágenes*/
 #Resultados {
     font-family: "Montserrat"; 
     background-color: rgb(34, 39, 43);
     border-radius: 15px;
-    width: max-content;
+    width: min-content;
     margin: 0 auto;
 }
 
@@ -117,13 +160,9 @@ div p {
     padding: 30px;
 }
 
-.tarjeta {
-    margin: 20px 20px;
-}
-
 .imagen {
-    width: 400px;
-    height: 250px;
+    width: 380px;
+    height: 230px;
     object-fit: cover;
     border: 1px solid #ffffff;
     border-radius: 15px;
@@ -134,66 +173,137 @@ div p {
     padding: 0;
 }
 
+/*Footer*/
+.footer_link_github {
+    position: relative;
+    width: 10%;
+    margin: 10px 10px 10px 10px ;
+}
+
+.footer_link_github img {
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+}
+
+
+/*Adaptación a tablet*/
 @media (max-width: 768px) {
-    .texto-barra {
-        flex-wrap: wrap;
-        width: 100%;
-        margin-top: 0;
-        justify-content: center;
+    .barra {
+        margin: 10px 0 100px 0;
     }
+
+    .texto-barra {
+        display: flex;
+        align-items: center;
+        width: 90%;
+    }
+
+    .texto-barra div {
+        width: max-content;
+        display: flex;
+        align-items: center;
+    }
+
+    .encabezado--item {
+        font-family: "Antipasto";
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        height: 80px;
+        z-index: 30;
+    }
+    .mitad_dos {color: #fe652f; padding-left: 10px;}
     .titulo_principal {
-        font-size: 32px;
-        padding: 5px 30px 0px 40px;
-        height: 60px;
-        border-radius: 0 60px 60px 0;
+        font-weight: 500;
+        font-size: 60px;
+        box-sizing: border-box;
+        width: max-content;
+        background-color: rgb(34, 39, 43);
+        border-radius: 0 100px 100px 0;
+        padding: 5px 50px 0px 80px;
+        position: absolute;
+        left: 70px;
+        z-index: 20;
     }
     .descripcion_barra {
-        font-size: 14px;
-        padding: 0px 40px 0px 40px;
-        height: 60px;
-        border-radius: 0 60px 60px 0;
+        font-weight: 100;
+        font-size: 15px;
+        background-color: #fe652f;
+        padding: 0px 40px 0px 10px;
+        border-radius: 0px 100px 100px 0px;
+        width: max-content;
+        height: 50px;
+        position: absolute;
+        left: 0px;
+        top: 77px;
+        z-index: 20;
     }
     .NHTSA {
-        font-size: 32px;
+        font-family: "Montserrat";
+        font-weight: 600;
+        font-size: 30px;
+        padding: 1px 0px 0px 10px;
     }
+
     .logo {
-        width: 60px;
-        height: 60px;
-        padding: 0px 20px 0px 15px;
+        width: 80px;
+        background-color: #fe652f;
+        padding: 0px 30px 0px 20px;
+        border-radius: 0px 100px 100px 0px;
     }
 
     #contenedor {
-        width: 92%;
+        width: 90%;
     }
     #titulo_y_listas {
-        width: 100%;
-        text-align: center;
-    }
-    div h1 {
-        width: 100%;
-        font-size: 30px;
         margin: 0 auto;
+        width: 100%;
     }
 
+    div h1 {
+        width: fit-content;
+        font-size: 40px;
+        text-align: left;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+    
+    div p {
+        width: 70%;
+        font-size: 15px;
+        text-align: center;
+        margin: 0 auto;
+    }
+    div p span {
+        font-weight: 900;
+    }
+    
     .listas {
         width: 100%;
         max-width: 400px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5px 10px
     }
     .selecciones {
         width: 100%;
         max-width: 220px;
     }
+    .info_auto {
+        width: fit-content;
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: center;
+    }
 
     #Resultados {
-        width: 100%;
+        width: fit-content;
     }
     .contenedor_tarjetas {
         flex-direction: column;
         align-items: center;
-        width: 100%;
+        width: fit-content;
         padding: 20px;
         gap: 20px;
     }
@@ -202,63 +312,173 @@ div p {
         width: 100%;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: left;
     }
+
     .imagen {
-        width: 400px;
-        height: 250px;
-    }
-}
-
-@media (max-width: 480px) {
-    .texto-barra {
-        width: 100%;
+        width: 380px;
+        height: 230px;
+        object-fit: cover;
+        border: 1px solid #ffffff;
+        border-radius: 15px;
     }
 
-    .titulo_principal {
-        font-size: 24px;
-        padding: 5px 20px 0px 25px;
-        height: 50px;
+    hr {width: 100%;}
+
+    #h3-var {
+        margin: 0;
+        padding: 0;
     }
-    .descripcion_barra {
-        font-size: 12px;
-        padding: 0px 20px;
-        height: 50px;
-    }
-    .NHTSA {
-        font-size: 24px;
-    }
-    .logo {
+
+    .footer_link_github img {
         width: 50px;
         height: 50px;
-        padding: 0px 15px 0px 10px;
+        border-radius: 16px;
+    }
+    .footer_link_github {
+        margin: 20px auto;
     }
 
-    #contenedor {
-        width: 95%;
+
+    /*Adaptación a teléfono*/
+@media (max-width: 480px) {
+    .barra {
+        margin: 20px 0 80px 0;
     }
+
+    .texto-barra {
+        display: flex;
+        align-items: center;
+        width: 90%;
+    }
+
+    .texto-barra div {
+        width: max-content;
+        display: flex;
+        align-items: center;
+    }
+
+    .encabezado--item {
+        font-family: "Antipasto";
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        height: 60px;
+        z-index: 30;
+    }
+    .mitad_dos {color: #fe652f; padding-left: 10px;}
+    .titulo_principal {
+        font-weight: 500;
+        font-size: 40px;
+        box-sizing: border-box;
+        width: max-content;
+        background-color: rgb(34, 39, 43);
+        border-radius: 0 100px 100px 0;
+        padding: 5px 30px 0px 80px;
+        position: absolute;
+        left: 20px;
+        z-index: 20;
+    }
+    .descripcion_barra {
+        font-weight: 100;
+        font-size: 12px;
+        background-color: #fe652f;
+        border-radius: 0px 100px 100px 0px;
+        padding: 0px 20px 0px 10px;
+        width: max-content;
+        height: 30px;
+        position: absolute;
+        left: 0px;
+        top: 70px;
+        z-index: 10;
+    }
+    .NHTSA {
+        font-family: "Montserrat";
+        font-weight: 600;
+        font-size: 22px;
+        padding: 0px 0px 2px 5px;
+    }
+
+    .logo {
+        width: 60px;
+        background-color: #fe652f;
+        padding: 0px 20px 0px 5px;
+        border-radius: 0px 100px 100px 0px;
+    }
+    
     div h1 {
-        font-size: 24px;
+        width: fit-content;
+        font-size: 30px;
+        text-align: center;
+        margin: 0 auto;
+        margin-bottom: 15px;
     }
-    #descripcion_titulo {
-        font-size: 14px;
+    
+    div p {
+        width: fit-content;
+        margin: 0 auto;
+        font-size: 10px;
+    }
+    
+    div p span {
+        font-weight: 900;
     }
 
     .listas {
-        padding: 12px;
+        width: 80%;
+        max-width: 300px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5px 10px
     }
     .selecciones {
         width: 100%;
         max-width: 200px;
-        font-size: 13px;
+    }
+    .info_auto {
+        width: fit-content;
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: center;
     }
 
+    #Resultados {
+        width: fit-content;
+    }
     .contenedor_tarjetas {
-        padding: 12px;
-        gap: 12px;
+        flex-direction: column;
+        align-items: center;
+        width: fit-content;
+        padding: 20px;
+    
     }
+    .tarjeta {
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+    }
+
     .imagen {
-        width: 300px;
-        height: 150px;
+        width: 100%;
+        height: 90%;
+        object-fit: cover;
+        border: 1px solid #ffffff;
+        border-radius: 15px;
     }
-}
+    hr {width: 100%;}
+    #h3-var {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .footer_link_github {
+        margin: 20px auto;
+    }
+    
+    .footer_link_github img {
+        width: 50px;
+        height: 50px;
+        border-radius: 16px;
+    }
